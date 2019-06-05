@@ -1,6 +1,6 @@
 # smile
 
-> A Vue.js project
+> A Vue.js project:  vue + mock +koa2 +node +moogodb
 
 ## Build Setup
 

@@ -56,12 +56,10 @@
     created(){
         axios.get('https://www.easy-mock.com/mock/5cfa619284d63d4aac27c139/smillevue/index')
         .then(res => {
-            console.log(res)
             if(res.status == 200){
                 this.category  = res.data.data.category
                 this.adBanner  = res.data.data.advertesPicture.PICTURE_ADDRESS
                 this.bannerPicArray = res.data.data.slides
-                console.log(this.adBanner)
             }
             })
         .catch(err => console.log(err))

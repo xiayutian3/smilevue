@@ -33,12 +33,30 @@
         <div class="pic">
             <img v-lazy="adBanner" width="100%"/>
         </div>  
-
+        <!--Recommend goods area-->
+        <div class="recommend-area">
+            <div class="recommend-title">
+                商品推荐
+            </div>
+            <div class="recommend-body">
+              <swiper :options="swiperOption">
+                <swiper-slide v-for="(item,index) in recommendGoods" :key = "index">
+                  <div class="recommend-item">
+                    <img v-lazy="item.image" width="80%" />
+                    <div>{{item.goodsName}}</div>
+                    <div>￥{{item.price}} (￥{{item.mallPrice}})</div>
+                  </div>
+                </swiper-slide>
+              </swiper>
+            </div>
+        </div>
   </div>
 </template>
 
 <script>
  import axios from 'axios'
+ import 'swiper/dist/css/swiper.css'
+ import { swiper, swiperSlide } from 'vue-awesome-swiper'
   export default {
     data() {
       return {
@@ -50,7 +68,11 @@
                 // {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg'},
             ],
         category:[],
-        adBanner:''
+        adBanner:'',
+        recommendGoods :[],
+        swiperOption:{
+          slidesPerView:3
+        }
       }
     },
     created(){
@@ -60,9 +82,15 @@
                 this.category  = res.data.data.category
                 this.adBanner  = res.data.data.advertesPicture.PICTURE_ADDRESS
                 this.bannerPicArray = res.data.data.slides
+                this.recommendGoods = res.data.data.recommend
+                console.log(this.recommendGoods)
             }
             })
         .catch(err => console.log(err))
+    },
+    components: {
+      swiper,
+      swiperSlide
     }
   }
 </script>

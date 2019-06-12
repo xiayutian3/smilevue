@@ -56,7 +56,7 @@
         <swiper-demo3/> -->
 
 
-        <!--floor one area-->
+        <!--floor one area--><!--floor one area-->
         <div class="floor">
 
           <div class="floor-anomaly">

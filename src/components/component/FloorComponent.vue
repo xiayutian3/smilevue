@@ -23,25 +23,28 @@
 		data() {
 			return {
 				floorData: this.floor1,
-				// floorData0 : this.floor1[0],
-				// floorData1 : this.floor1[1],
-				// floorData2 : this.floor1[2]
+				// floorData0 : {},
+				// floorData1 : {},
+				// floorData2 : {}
+        floorData0 : this.floor1[0],
+				floorData1 : this.floor1[1],
+				floorData2 : this.floor1[2]
 			}
 		},
 		created(){
-			console.log(this.floorData)
+			console.log(this.floorData,)
 		},
-		computed:{
-			floorData0:function(){
-				return this.floor1[0]
-			},
-			floorData1:function(){
-				return this.floor1[1]
-			},
-			floorData2:function(){
-				return this.floor1[2]
-			}
-		},
+		// computed:{
+		// 	floorData0:function(){
+		// 		return this.floor1[0]
+		// 	},
+		// 	floorData1:function(){
+		// 		return this.floor1[1]
+		// 	},
+		// 	floorData2:function(){
+		// 		return this.floor1[2]
+		// 	}
+		// },
 		watch:{
 			// floor1:function(newval,oldval){
 			// 	this.floorData0 = this.floor1[0],

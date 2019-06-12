@@ -1,258 +1,240 @@
 <template>
-  <div>
-        <div class="search-bar">
-            <van-row>
-                <van-col span="3">
-                    <img :src="locationIcon" class="location-icon"/>
-                </van-col>
-                <van-col span="16">
-                    <input type="text" class="search-input" />
-                </van-col>
-                <van-col span="5">
-                    <van-button size="mini">查找</van-button>
-                </van-col>
-            </van-row>
-        </div>
+	<div>
+		<div class="search-bar">
+			<van-row>
+				<van-col span="3">
+					<img :src="locationIcon" class="location-icon" />
+				</van-col>
+				<van-col span="16">
+					<input type="text" class="search-input" />
+				</van-col>
+				<van-col span="5">
+					<van-button size="mini">查找</van-button>
+				</van-col>
+			</van-row>
+		</div>
 
-        <!--swiper area-->
-        <div class="swiper-area">
-            <van-swipe :autoplay="1000" class="van-swipe">
-                <van-swipe-item v-for="(item,index) in bannerPicArray" :key="index">
-                    <img v-lazy="item.image" alt="" width="100%">
-                </van-swipe-item>
-            </van-swipe>
-        </div>
-        
-        <div class="type-bar">
-            <div  v-for="(cate,index) in category" :key="index" >
-                    <img v-lazy="cate.image" width="90%" />
-                    <span>{{cate.mallCategoryName}}</span> 
-            </div>
-        </div>
-        
-        <div class="pic">
-            <img v-lazy="adBanner" width="100%"/>
-        </div>  
-        <!--Recommend goods area-->
-        <div class="recommend-area">
-            <div class="recommend-title">
-                商品推荐
-            </div>
-            <div class="recommend-body">
-              <swiper :options="swiperOption">
-                <swiper-slide v-for="(item,index) in recommendGoods" :key = "index">
-                  <div class="recommend-item">
-                    <img v-lazy="item.image" width="80%" />
-                    <div>{{item.goodsName}}</div>
-                    <div>￥{{item.price}} (￥{{item.mallPrice}})</div>
-                  </div>
-                </swiper-slide>
-              </swiper>
-            </div>
-        </div>
-        <!-- <swiper-dfault></swiper-dfault>
+		<!--swiper area-->
+		<div class="swiper-area">
+			<van-swipe :autoplay="1000" class="van-swipe">
+				<van-swipe-item v-for="(item,index) in bannerPicArray" :key="index">
+					<img v-lazy="item.image" alt="" width="100%">
+				</van-swipe-item>
+			</van-swipe>
+		</div>
+
+		<div class="type-bar">
+			<div v-for="(cate,index) in category" :key="index">
+				<img v-lazy="cate.image" width="90%" />
+				<span>{{cate.mallCategoryName}}</span>
+			</div>
+		</div>
+
+		<div class="pic">
+			<img v-lazy="adBanner" width="100%" />
+		</div>
+		<!--Recommend goods area-->
+		<div class="recommend-area">
+			<div class="recommend-title">
+				商品推荐
+			</div>
+			<div class="recommend-body">
+				<swiper :options="swiperOption">
+					<swiper-slide v-for="(item,index) in recommendGoods" :key="index">
+						<div class="recommend-item">
+							<img v-lazy="item.image" width="80%" />
+							<div>{{item.goodsName}}</div>
+							<div>￥{{item.price}} (￥{{item.mallPrice}})</div>
+						</div>
+					</swiper-slide>
+				</swiper>
+			</div>
+		</div>
+		<!-- <swiper-dfault></swiper-dfault>
         <swiper-demo1/>
         <swiper-demo2/>
         <swiper-demo3/> -->
 
 
-        <!--floor one area--><!--floor one area-->
-        <div class="floor">
+		<!--floor one area-->
 
-          <div class="floor-anomaly">
-              <div class="floor-one"><img :src="floor1_0.image" width="100%" /></div>
-              <div>
-                  <div class="floor-two"><img :src="floor1_1.image" width="100%" /></div>
-                  <div><img :src="floor1_2.image" width="100%" /></div>
-              </div>
-          </div>
-          <div class="floor-rule">
-            <div v-for="(item ,index) in floor1.slice(3)" :key="index">
-                <img :src="item.image" width="100%"/>
-            </div>
-        </div>
-
-        </div>
+		<floor-component :floor1="floor1" />
 
 
 
-  </div>
+
+	</div>
 </template>
 
 <script>
- import axios from 'axios'
- import 'swiper/dist/css/swiper.css'
- import { swiper, swiperSlide } from 'vue-awesome-swiper'
-//  import swiperDfault from '../swiper/swiperDefault.vue'
-//  import swiperDemo1 from '../swiper/swiperDemo1.vue'
-//  import swiperDemo2 from '../swiper/swiperDemo2.vue'
-//  import swiperDemo3 from '../swiper/swiperDemo3.vue'
-  export default {
-    data() {
-      return {
-        msg: 'hello world',
-        locationIcon:require('../../assets/images/location.png'),
-         bannerPicArray:[
-                // {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic001.jpg'},
-                // {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic002.jpg'},
-                // {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg'},
-            ],
-        category:[],
-        adBanner:'',
-        recommendGoods :[],
-        swiperOption:{
-          slidesPerView:3
-        }
-      }
-    },
-    created(){
-        axios.get('https://www.easy-mock.com/mock/5cfa619284d63d4aac27c139/smillevue/index')
-        .then(res => {
-            if(res.status == 200){
-                this.category  = res.data.data.category
-                this.adBanner  = res.data.data.advertesPicture.PICTURE_ADDRESS
-                this.bannerPicArray = res.data.data.slides
-                this.recommendGoods = res.data.data.recommend
-                this.floor1 = res.data.data.floor1              //楼层1数据
-                this.floor1_0 =this.floor1[0]
-                this.floor1_1 =this.floor1[1]
-                this.floor1_2 =this.floor1[2]
-                // console.log(this.recommendGoods)
-            }
-            })
-        .catch(err => console.log(err))
-    },
-    components: {
-      swiper,
-      swiperSlide,
-      // swiperDfault,
-      // swiperDemo1,
-      // swiperDemo2,
-      // swiperDemo3
-    }
-  }
+	import axios from 'axios'
+	import 'swiper/dist/css/swiper.css'
+	import {
+		swiper,
+		swiperSlide
+	} from 'vue-awesome-swiper'
+	//  import swiperDfault from '../swiper/swiperDefault.vue'
+	//  import swiperDemo1 from '../swiper/swiperDemo1.vue'
+	//  import swiperDemo2 from '../swiper/swiperDemo2.vue'
+	//  import swiperDemo3 from '../swiper/swiperDemo3.vue'
+	import FloorComponent from '../component/FloorComponent.vue'
+	export default {
+		data() {
+			return {
+				msg: 'hello world',
+				locationIcon: require('../../assets/images/location.png'),
+				bannerPicArray: [
+					// {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic001.jpg'},
+					// {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic002.jpg'},
+					// {imageUrl:'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg'},
+				],
+				category: [],
+				adBanner: '',
+				recommendGoods: [],
+				swiperOption: {
+					slidesPerView: 3
+				},
+				floor1: []
+			}
+		},
+		// created() {
+		// 	axios.get('https://www.easy-mock.com/mock/5cfa619284d63d4aac27c139/smillevue/index')
+		// 		.then(res => {
+		// 			if (res.status == 200) {
+		// 				this.category = res.data.data.category
+		// 				this.adBanner = res.data.data.advertesPicture.PICTURE_ADDRESS
+		// 				this.bannerPicArray = res.data.data.slides
+		// 				this.recommendGoods = res.data.data.recommend
+		// 				this.floor1 = res.data.data.floor1 //楼层1数据
+		// 				// this.floor1_0 =this.floor1[0]
+		// 				// this.floor1_1 =this.floor1[1]
+		// 				// this.floor1_2 =this.floor1[2]
+		// 				// console.log(this.floor1_0)
+		// 			}
+		// 		})
+		// 		.catch(err => console.log(err))
+		// 		
+		// },
+		
+		async created() {
+			let res = await axios.get('https://www.easy-mock.com/mock/5cfa619284d63d4aac27c139/smillevue/index')
+					if (res.status == 200) {
+						this.category = res.data.data.category
+						this.adBanner = res.data.data.advertesPicture.PICTURE_ADDRESS
+						this.bannerPicArray = res.data.data.slides
+						this.recommendGoods = res.data.data.recommend
+						this.floor1 = res.data.data.floor1 //楼层1数据
+						// this.floor1_0 =this.floor1[0]
+						// this.floor1_1 =this.floor1[1]
+						// this.floor1_2 =this.floor1[2]
+						// console.log(res)
+					}else{
+						// console.log(err)
+					}
+				
+		},
+		components: {
+			swiper,
+			swiperSlide,
+			// swiperDfault,
+			// swiperDemo1,
+			// swiperDemo2,
+			// swiperDemo3
+			FloorComponent
+		}
+	}
 </script>
 
 <style scoped>
-.van-swipe{
-        max-height: 15rem !important;
-    /* height: 100% !important; */
-}
-.van-swipe img{
- max-height: 15rem !important;
-}
-  .search-bar{
-        height:2.2rem;
-        background-color: #e5017d;
-        line-height: 2.2rem;
-        overflow: hidden;
-    }
-    .search-input{
-        width:100%;
-        height: 1.3rem;
-        border-top:0px;
-        border-left:0px;
-        border-right:0px;
-        border-bottom:1px solid #fff !important;
-        background-color: #e5017d;
-        color:#fff;
-    }
-    .location-icon{
-        width: 80%; 
-        padding-top:.2rem;
-        padding-left:.3rem;
-    }
-    .swiper-area{
-        clear:both;
-        max-height:15rem;
-        overflow: hidden;
-    }
+	.van-swipe {
+		max-height: 15rem !important;
+		/* height: 100% !important; */
+	}
 
-    .type-bar{
-        background-color: #fff;
-        margin:0 .3rem .3rem .3rem;
-        border-radius: .3rem;
-        font-size:14px;
-        display:flex;
-        flex-direction:row;
-        flex-wrap:nowrap;
-    }
-    .type-bar div{
-        padding:.3rem;
-        font-size:12px;
-        text-align: center;
-        flex:1;
-    }
-    .recommend-area{
-        background-color: #fff;
-        margin-top:.3rem;
-    }
-    .recommend-title{
-        border-bottom:1px solid #eee;
-        font-size:14px;
-        padding:.2rem;
-        color:#e5017d;
-    }
-    .recommend-body{
-        border-bottom:1px solid #eee;
-    }
-    .recommend-item{
-        width:99%;
-        border-right:1px solid #eee;
-        font-size:12px;
-        text-align: center;
-    }
-    .hot-area{
-        text-align: center;
-        font-size:14px;
-        height: 1.8rem;
-        line-height:1.8rem;
-    }
-    .hot-goods{
-        height: 130rem;
-        overflow: hidden;
-        background-color: #fff;
-    }
-    
+	.van-swipe img {
+		max-height: 15rem !important;
+	}
 
-    
-    .floor-anomaly{
-      display: flex;
-      flex-direction:row;
-      background-color: #fff;
-      border-bottom:1px solid #ddd;
-  }
-  .floor-anomaly div{
-     width:10rem;
-    
-     box-sizing: border-box;
-     -webkit-box-sizing: border-box;
-  }
-  .floor-one{
-      border-right:1px solid #ddd;
-      
-  }
-  .floor-two{
-      border-bottom:1px solid #ddd;
-  }
-  .floor-rule{
-      display: flex;
-      flex-direction: row;
-      flex-wrap:wrap;
-      background-color: #fff;
+	.search-bar {
+		height: 2.2rem;
+		background-color: #e5017d;
+		line-height: 2.2rem;
+		overflow: hidden;
+	}
 
-  }
-  .floor-rule div{
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      width:10rem;
-      border-bottom:1px solid #ddd;
-  }
-  .floor-rule div:nth-child(odd){
-      border-right: 1px solid #ddd;
-  }
+	.search-input {
+		width: 100%;
+		height: 1.3rem;
+		border-top: 0px;
+		border-left: 0px;
+		border-right: 0px;
+		border-bottom: 1px solid #fff !important;
+		background-color: #e5017d;
+		color: #fff;
+	}
 
+	.location-icon {
+		width: 80%;
+		padding-top: .2rem;
+		padding-left: .3rem;
+	}
 
+	.swiper-area {
+		clear: both;
+		max-height: 15rem;
+		overflow: hidden;
+	}
 
+	.type-bar {
+		background-color: #fff;
+		margin: 0 .3rem .3rem .3rem;
+		border-radius: .3rem;
+		font-size: 14px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+	}
 
+	.type-bar div {
+		padding: .3rem;
+		font-size: 12px;
+		text-align: center;
+		flex: 1;
+	}
+
+	.recommend-area {
+		background-color: #fff;
+		margin-top: .3rem;
+	}
+
+	.recommend-title {
+		border-bottom: 1px solid #eee;
+		font-size: 14px;
+		padding: .2rem;
+		color: #e5017d;
+	}
+
+	.recommend-body {
+		border-bottom: 1px solid #eee;
+	}
+
+	.recommend-item {
+		width: 99%;
+		border-right: 1px solid #eee;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.hot-area {
+		text-align: center;
+		font-size: 14px;
+		height: 1.8rem;
+		line-height: 1.8rem;
+	}
+
+	.hot-goods {
+		height: 130rem;
+		overflow: hidden;
+		background-color: #fff;
+	}
 </style>

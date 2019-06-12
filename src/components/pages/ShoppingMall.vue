@@ -59,6 +59,7 @@
 		<!--floor one area-->
 
 		<floor-component :floor1="floor1"  v-if="floor1.length>0" />
+    <!-- <floor-component :floor1="floor1" /> -->
 
 
 

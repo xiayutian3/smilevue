@@ -1,15 +1,16 @@
 <template>
 	<div class="floor">
 
-		<div class="floor-anomaly">
-			<div class="floor-one"><img :src="floorData0.image" width="100%" /></div>
+		<div class="floor-anomaly" >
+      <!-- <div class="floor-one"><img :src="floor1[0].image" width="100%" /></div>    //  floor1[0].image 也是可以的 -->
+      <div class="floor-one"><img :src="floorData0.image" width="100%" /></div>  
 			<div>
 				<div class="floor-two"><img :src="floorData1.image" width="100%" /></div>
 				<div><img :src="floorData2.image" width="100%" /></div>
 			</div>
 		</div>
 		<div class="floor-rule">
-			<div v-for="(item ,index) in floorData.slice(3)" :key="index">
+			<div v-for="(item ,index) in floor1.slice(3)" :key="index">
 				<img :src="item.image" width="100%" />
 			</div>
 		</div>
@@ -22,7 +23,6 @@
 		props: ['floor1'],
 		data() {
 			return {
-				floorData: this.floor1,
 				// floorData0 : {},
 				// floorData1 : {},
 				// floorData2 : {}
@@ -32,7 +32,7 @@
 			}
 		},
 		created(){
-			console.log(this.floorData,)
+			// console.log(this.floor1,)
 		},
 		// computed:{
 		// 	floorData0:function(){

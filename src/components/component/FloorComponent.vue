@@ -1,6 +1,6 @@
 <template>
 	<div class="floor">
-
+    <div class="floor-title"> {{floorTitle}} </div>
 		<div class="floor-anomaly" >
       <!-- <div class="floor-one"><img :src="floor1[0].image" width="100%" /></div>    //  floor1[0].image 也是可以的 -->
       <div class="floor-one"><img :src="floorData0.image" width="100%" /></div>  
@@ -20,11 +20,11 @@
 
 <script>
 	export default {
-		props: ['floor1'],
+		props: ['floor1','floorTitle'],
 		data() {
 			return {
 				// floorData0 : {},
-				// floorData1 : {},
+				// floorData1 : {},s
 				// floorData2 : {}
         floorData0 : this.floor1[0],
 				floorData1 : this.floor1[1],
@@ -57,6 +57,12 @@
 </script>
 
 <style lang="less" scoped>
+  .floor-title{
+      text-align:center;
+      font-size:14px;
+      height: 1.8rem;
+      line-height: 1.8rem;
+  }
 	.floor-anomaly {
 		display: flex;
 		flex-direction: row;

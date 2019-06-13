@@ -56,10 +56,13 @@
         <swiper-demo3/> -->
 
 
-		<!--floor one area-->
-
-		<floor-component :floor1="floor1"  v-if="floor1.length>0" />
+    <!--floor one area-->
+    
     <!-- <floor-component :floor1="floor1" /> -->
+		<floor-component :floor1="floor1" :floorTitle = 'floorName.floor1' v-if="floor1.length>0" />
+    <floor-component :floor1="floor2" :floorTitle = 'floorName.floor2' v-if="floor2.length>0" />
+    <floor-component :floor1="floor3" :floorTitle = 'floorName.floor3' v-if="floor3.length>0" />
+    
 
 
 
@@ -95,7 +98,10 @@
 				swiperOption: {
 					slidesPerView: 3
 				},
-				floor1: []
+				floor1: [],
+        floor2: [],
+        floor3: [],
+        floorName:{}
 			}
 		},
 		// created() {
@@ -125,10 +131,13 @@
 						this.bannerPicArray = res.data.data.slides
 						this.recommendGoods = res.data.data.recommend
 						this.floor1 = res.data.data.floor1 //楼层1数据
+            this.floor2 = res.data.data.floor2              //楼层2数据
+            this.floor3 = res.data.data.floor3              //楼层3数据
+            this.floorName = res.data.data.floorName  
 						// this.floor1_0 =this.floor1[0]
 						// this.floor1_1 =this.floor1[1]
 						// this.floor1_2 =this.floor1[2]
-						// console.log(res)
+						// console.log(this.floorName)
 					}else{
 						// console.log(err)
 					}

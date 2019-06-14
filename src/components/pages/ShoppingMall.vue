@@ -44,7 +44,7 @@
 						<div class="recommend-item">
 							<img v-lazy="item.image" width="80%" />
 							<div>{{item.goodsName}}</div>
-							<div>￥{{item.price}} (￥{{item.mallPrice}})</div>
+							<div>￥{{item.price | moneyFilter}} (￥{{item.mallPrice | moneyFilter}})</div>
 						</div>
 					</swiper-slide>
 				</swiper>
@@ -81,7 +81,8 @@
 	//  import swiperDemo1 from '../swiper/swiperDemo1.vue'
 	//  import swiperDemo2 from '../swiper/swiperDemo2.vue'
 	//  import swiperDemo3 from '../swiper/swiperDemo3.vue'
-	import FloorComponent from '../component/FloorComponent.vue'
+  import FloorComponent from '../component/FloorComponent.vue'
+  import {toMoney} from '@/filter/moneyFilter.js'
 	export default {
 		data() {
 			return {
@@ -137,7 +138,7 @@
 						// this.floor1_0 =this.floor1[0]
 						// this.floor1_1 =this.floor1[1]
 						// this.floor1_2 =this.floor1[2]
-						// console.log(this.floorName)
+						console.log(res)
 					}else{
 						// console.log(err)
 					}
@@ -151,7 +152,12 @@
 			// swiperDemo2,
 			// swiperDemo3
 			FloorComponent
-		}
+    },
+    filters:{
+      moneyFilter(money){
+       return toMoney(money)
+      }
+    }
 	}
 </script>
 

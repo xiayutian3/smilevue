@@ -8,7 +8,7 @@
 return money;
 }*/
 
-/*<!-- 代码优化 -->*/
+/*<!-- 代码优化 --> */
 export function toMoney(money=0){
   return money.toFixed(2)
 }

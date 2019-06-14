@@ -102,7 +102,8 @@
 				floor1: [],
         floor2: [],
         floor3: [],
-        floorName:{}
+        floorName:{},
+
 			}
 		},
 		// created() {

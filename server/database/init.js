@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 const db = 'mongodb://localhost/simle-db';
+const glob = require('glob');
+const {resolve} = require('path');
+
+exports.initSchemas = ()=>{
+  glob.sync(resolve(__dirname,'./schema','**/*.js')).forEach(require)   //一次性引入所有的Schema文件
+}
 
 
 exports.connect = ()=>{
   //连接数据库
-  mongoose.connect(db,{ useNewUrlParser: true })
+  mongoose.connect(db,{ useNewUrlParser: true ,useCreateIndex: true})
   let maxConnectTimes = 0;
 
   return new Promise((resolve,reject)=>{

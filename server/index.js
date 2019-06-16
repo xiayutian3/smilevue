@@ -1,9 +1,23 @@
 const Koa = require('koa')
 const app = new Koa()
-const {connect} = require('./database/init') 
+const {connect,initSchemas} = require('./database/init') 
+const mongoose = require('mongoose')
+
+
 
 ;(async()=>{
- await connect()
+ await connect();
+ initSchemas();
+ const User = mongoose.model('User')
+ let oneUser = new User({
+  userName:'jspang111',
+  password:'123456'
+ })
+ oneUser.save().then(()=>{
+  console.log('插入成功')
+ });
+ let findUsers = await User.find({})
+ console.log(findUsers)
 })();
 
 app.use(async(ctx)=>{

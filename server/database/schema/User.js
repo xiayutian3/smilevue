@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;    //声明Object类型   定义主键
 
 

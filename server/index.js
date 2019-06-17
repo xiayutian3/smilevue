@@ -3,6 +3,16 @@ const app = new Koa()
 const {connect,initSchemas} = require('./database/init') 
 const mongoose = require('mongoose')
 
+const Router = require('koa-router')
+//引入我们的user.js模块
+let user = require('./appApi/user')
+
+//装载所有子路由
+let router = new Router()
+router.use('/user',user.routes())
+
+//加载路由中间件
+app.use(router.routes()).use(router.allowedMethods())
 
 
 ;(async()=>{
@@ -10,13 +20,13 @@ const mongoose = require('mongoose')
  initSchemas();
  const User = mongoose.model('User')
  let oneUser = new User({
-  userName:'jspang111',
+  userName:'jsp777777',
   password:'123456'
  })
  oneUser.save().then(()=>{
   console.log('插入成功')
  });
- let findUsers = await User.find({})
+ let findUsers = await User.find({}).exec();
  console.log(findUsers)
 })();
 

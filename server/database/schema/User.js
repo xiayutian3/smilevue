@@ -14,6 +14,33 @@ const userSchema = new Schema({
   lastLoginAt:{type:Date,default:Date.now()}
 })
 
+// 创建出来的集合没有 s   加上{collection:'user'}
+// const userSchema = new Schema({
+//   UserId:ObjectId,
+//   userName:{unique:true,type:String},
+//   password:String,
+//   createAt:{type:Date,default:Date.now()},
+//   lastLoginAt:{type:Date,default:Date.now()}
+// },{collection:'user'})
+
+
+// Shema中的比对实例方法(密码的比对)
+userSchema.methods = {
+  //密码比对的方法
+  comparePassword:(_password,password)=>{
+    return new Promise((resolve,reject)=>{
+      bcrypt.compare(_password,password,(err,isMatch)=>{
+        if(!err) resolve(isMatch)
+        else reject(err)
+      })
+    })
+  }
+}
+
+
+
+
+
 //每次存储数据时都要执行
 userSchema.pre('save',function(next){
   //let user = this

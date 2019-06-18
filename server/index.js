@@ -12,10 +12,12 @@ app.use(cors())
 
 //引入我们的user.js模块
 let user = require('./appApi/user')
+let goods = require('./appApi/goods')
 
 //装载所有子路由
 let router = new Router()
 router.use('/user',user.routes())
+router.use('/goods',goods.routes())
 
 //加载路由中间件
 app.use(router.routes()).use(router.allowedMethods())

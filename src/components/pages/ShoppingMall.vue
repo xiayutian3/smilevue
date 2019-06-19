@@ -156,7 +156,7 @@
 						// this.floor1_0 =this.floor1[0]
 						// this.floor1_1 =this.floor1[1]
 						// this.floor1_2 =this.floor1[2]
-						console.log(this.hotGoods)
+						// console.log(this.hotGoods)
 					}else{
 						// console.log(err)
 					}

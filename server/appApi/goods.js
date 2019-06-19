@@ -66,5 +66,103 @@ router.get('/insertAllCategory_sub',async(ctx)=>{
   })
   ctx.body='开始导入数据'
 })
+/*
+//***获取商品详细信息的接口
+// router.post('/getDetailGoodsInfo',async(ctx)=>{
+//   let goodsId = ctx.request.body.goodsId
+//   const Goods = mongoose.model('Goods')
+//   await Goods.findOne({ID:goodsId}).exec()
+//   .then((res)=>{
+//     ctx.body = {
+//       code:200,
+//       message:res
+//     }
+//   }).catch(err=>{
+//     console.log(err)
+//     ctx.body = {
+//       code:500,
+//       message:err
+//     }
+//   })
+// })
+*/
+
+/***获取商品详细信息的接口*/
+router.post('/getDetailGoodsInfo',async(ctx)=>{
+  try{
+    let goodsId = ctx.request.body.goodsId
+    const Goods = mongoose.model('Goods')
+    let result = await Goods.findOne({ID:goodsId}).exec()
+    ctx.body = {
+      code:200,
+      message:result
+    }
+  }catch(err){
+    ctx.body = {
+      code:500,
+      message:err
+    }
+  }
+})
+
+/*读取大类数据的接口 */
+router.get('/getCategoryList',async(ctx)=>{
+  try{
+    const Category = mongoose.model('Category')
+    let result = await Category.find({}).exec()
+    ctx.body={
+      code:200,
+      message:result
+    }
+  }catch(err){
+    ctx.body = {
+      code:500,
+      message:err
+    }
+  }
+})
+
+
+/*读取小类数据的接口 */
+router.get('/getCategorySubList',async(ctx)=>{
+  try{
+    // let categoryId = ctx.request.body.categoryId
+    let categoryId = 1
+    const Category_sub  = mongoose.model('Category_sub')
+    let result = await Category_sub.find({MALL_CATEGORY_ID:categoryId}).exec()
+    ctx.body = {
+      code:200,
+      message:result
+    }
+  }catch(err){
+    ctx.body ={
+      code:500,
+      message:err
+    }
+  }
+})
+
+/**根据商品类别获取商品列表 */ 
+router.get('/getGoodsListByCategorySubID',async(ctx)=>{
+  try{
+    // let categorySubId  = ctx.request.body.categorySubId
+    let categorySubId  = '2c9f6c946016f86f01601709335d0000'
+    const Goods = mongoose.model('Goods')
+    let result = await Goods.find({SUB_ID:categorySubId}).exec()
+    ctx.body = {
+      code:200,
+      message:result
+    }
+  }catch(err){
+    ctx.body = {
+      code:500,
+      message:err
+    }
+  }
+})
+
+
+
+
 
 module.exports = router

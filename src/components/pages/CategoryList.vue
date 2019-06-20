@@ -13,8 +13,8 @@
           </div>
         </van-col>
         <van-col span="18">
-          <div class="tabCategorySub">
-            <van-tabs v-model="active" swipeable>
+          <div class="tabCategorySub" >
+            <van-tabs v-model="active" swipeable @click="onClickCategorySub">
               <van-tab v-for="(item,index) in categorySub" :key="index" :title="item.MALL_SUB_NAME"></van-tab>
             </van-tabs>
           </div>
@@ -29,8 +29,12 @@
                 finished-text="没有更多了"
                 @load="onLoad"
                 >
-                <div class="list-item" v-for="item in list" :key="item">
-                  {{item}}
+                <div class="list-item" v-for="(item,index) in goodList" :key="index">
+                    <div class="list-item-img"><img v-lazy="item.IMAGE1" width="100%"/></div>
+                    <div class="list-item-text">
+                        <div>{{item.NAME}}</div>
+                        <div class="">￥{{item.ORI_PRICE | moneyFilter }}</div>
+                    </div>
                 </div>
                 </van-list>
               </van-pull-refresh>
@@ -56,8 +60,11 @@
         active:0,
         loading:false,
         finished:false,
-        list:[],
-        isLoading:false
+        // list:[],
+        isLoading:false,
+        page:1,
+        goodList:[],
+        categorySubId:''
       };
     },
 
@@ -91,6 +98,10 @@
         this.currentIdex = index
         this.active = 0
         this.getCategorySubByCategoryId(id)
+
+        this.page = 1
+        this.goodList = []
+        this.finished = false
       },
       //根据大类id来读取小类的类别列表
       getCategorySubByCategoryId(categoryId){
@@ -103,6 +114,8 @@
         }).then((res)=>{
           if(res.data.code == 200 && res.data.message){
             this.categorySub = res.data.message
+            this.categorySubId = this.categorySub[0].ID
+            this.onLoad()
             console.log('categorySub',this.categorySub)
           }else{
             Toast('服务器错误，数据取得失败')
@@ -116,27 +129,54 @@
       //实现上拉加载
       onLoad(){
         setTimeout(()=>{
-          for(let i = 0;i<10 ; i++){
-            this.list.push(this.list.length+1)
-          }
-          this.loading = false
-          if(this.list.length>= 40){
-            this.finished = true
-          }
-        },500)
+          console.log('么偶有点用 onLoad onLoad')
+         this.categorySubId = this.categorySubId?this.categorySubId:this.categorySub[0].ID
+         this.getGoodList()
+        },1000)
       },
       ////实现下拉刷新
       onRefresh(){
         setTimeout(() => {
-          this.$toast('刷新成功')
+          // this.$toast('刷新成功')
           this.isLoading = false,
           //重置上拉刷新的东西
           this.finished = false
-          this.list =[]
+          this.goodList =[]
           this.onLoad()
         }, 500);
+      },
+      // 小类商品列表的获取方法
+      getGoodList(){
+        axios({
+          url:url.getGoodsListByCategorySubID,
+          method:'post',
+          data:{
+            page:this.page,
+            categorySubId:this.categorySubId
+          }
+        }).then((res)=>{
+          if(res.data.code == 200 && res.data.message.length){
+            this.page++
+            this.goodList = this.goodList.concat(res.data.message)
+          }else{
+            this.finished = true
+          }
+          this.loading = false
+
+        }).catch(err=>{
+          console.log(err)
+        })
+      },
+      //点击小tab获取相应内容
+      onClickCategorySub(index){
+        this.categorySubId = this.categorySub[index].ID
+        //做一些重置
+        this.goodList = []
+        this.page = 1
+        this.finished  = false
+        this.onLoad()
+        console.log('tab点击了')
       }
-      
     },
 
     components: {},

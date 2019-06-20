@@ -77,7 +77,7 @@ export default {
           new Promise((resolve,reject)=>{
             localStorage.userInfo = {userName:this.username}
             setTimeout(()=>{
-
+              resolve()
             },500)
           }).then(()=>{
             Toast.success('登录成功')

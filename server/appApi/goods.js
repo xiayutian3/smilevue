@@ -124,10 +124,10 @@ router.get('/getCategoryList',async(ctx)=>{
 
 
 /*读取小类数据的接口 */
-router.get('/getCategorySubList',async(ctx)=>{
+router.post('/getCategorySubList',async(ctx)=>{
   try{
-    // let categoryId = ctx.request.body.categoryId
-    let categoryId = 1
+    let categoryId = ctx.request.body.categoryId
+    // let categoryId = 1
     const Category_sub  = mongoose.model('Category_sub')
     let result = await Category_sub.find({MALL_CATEGORY_ID:categoryId}).exec()
     ctx.body = {
@@ -145,10 +145,14 @@ router.get('/getCategorySubList',async(ctx)=>{
 /**根据商品类别获取商品列表 */ 
 router.get('/getGoodsListByCategorySubID',async(ctx)=>{
   try{
-    // let categorySubId  = ctx.request.body.categorySubId
-    let categorySubId  = '2c9f6c946016f86f01601709335d0000'
+    let categorySubId  = ctx.request.body.categorySubId  //子类别id
+    let page = ctx.request.body.page   //当前的页数
+    let num = 10  //每页显示的数量
+    let start = (page-1)*10  //开始的位置
+    
+    // let categorySubId  = '2c9f6c946016f86f01601709335d0000'
     const Goods = mongoose.model('Goods')
-    let result = await Goods.find({SUB_ID:categorySubId}).exec()
+    let result = await Goods.find({SUB_ID:categorySubId}).skip(start).limit(num).exec()
     ctx.body = {
       code:200,
       message:result

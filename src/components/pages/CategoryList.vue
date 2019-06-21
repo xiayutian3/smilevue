@@ -27,10 +27,17 @@
                 v-model="loading"
                 :finished="finished"
                 finished-text="没有更多了"
+                :offset=100
                 @load="onLoad"
                 >
-                <div class="list-item" v-for="(item,index) in goodList" :key="index">
-                    <div class="list-item-img"><img v-lazy="item.IMAGE1" width="100%"/></div>
+                <div class="list-item" v-for="(item,index) in goodList" :key="index" @click="goGoodsInfo(item.ID)">
+                    <div class="list-item-img">
+                      <!-- <img :src="item.IMAGE1" :onerror="errorImg" width="100%"/>     -->
+                      <!-- 如果使用vant封装好的 v-lazy  无法使用  :onerror   只能用:src   vant内部自己配只有选项 
+                      不用上边的方法的话，我在main。js配置了  vant封装好的 v-lazy  所以下边的img可以使用了
+                      -->
+                      <img v-lazy="item.IMAGE1" width="100%"/>
+                    </div>
                     <div class="list-item-text">
                         <div>{{item.NAME}}</div>
                         <div class="">￥{{item.ORI_PRICE | moneyFilter }}</div>
@@ -56,21 +63,21 @@
       return {
         category:[],
         currentIdex:0,
-        categorySub:[],
-        active:0,
-        loading:false,
-        finished:false,
+        categorySub:[],    //小类类别
+        active:0,      //激活标签值
+        loading:false,   
+        finished:false,   //上拉加载是否有数据
         // list:[],
-        isLoading:false,
-        page:1,
-        goodList:[],
-        categorySubId:''
+        isLoading:false,  //下拉刷新
+        page:1,      //商品列表的页面
+        goodList:[],   //商品列表信息
+        categorySubId:'',  //商品子类ID
+        errorImg:'this.src="'+require('@/assets/images/errorimg.png')+'"'
       };
     },
 
     created() {
       this.getCategory()
-      this.getCategorySubByCategoryId(1)
      },
 
     mounted() { },
@@ -83,8 +90,10 @@
             method:'get'
           })
           if(result.data.code == 200 && result.data.message){
-            console.log('成功',result)
+            // console.log('成功',result)
             this.category = result.data.message
+            this.getCategorySubByCategoryId(this.category[0].ID)
+
           }else{
             Toast('服务器错误，数据取得失败')
             console.log('失败',result)
@@ -102,6 +111,7 @@
         this.page = 1
         this.goodList = []
         this.finished = false
+        this.onLoad()
       },
       //根据大类id来读取小类的类别列表
       getCategorySubByCategoryId(categoryId){
@@ -115,8 +125,7 @@
           if(res.data.code == 200 && res.data.message){
             this.categorySub = res.data.message
             this.categorySubId = this.categorySub[0].ID
-            this.onLoad()
-            console.log('categorySub',this.categorySub)
+            // console.log('categorySub11111111',this.categorySub)
           }else{
             Toast('服务器错误，数据取得失败')
           }
@@ -127,9 +136,10 @@
         })
       },
       //实现上拉加载
+      // List组件刚开始加载的时候回自己触发，不用人为调用它
       onLoad(){
         setTimeout(()=>{
-          console.log('么偶有点用 onLoad onLoad')
+          // console.log(' onLoad onLoad 事件')
          this.categorySubId = this.categorySubId?this.categorySubId:this.categorySub[0].ID
          this.getGoodList()
         },1000)
@@ -137,16 +147,18 @@
       ////实现下拉刷新
       onRefresh(){
         setTimeout(() => {
-          // this.$toast('刷新成功')
-          this.isLoading = false,
+          this.$toast('刷新成功')
+          this.isLoading = false
           //重置上拉刷新的东西
           this.finished = false
           this.goodList =[]
+          this.page = 1
           this.onLoad()
         }, 500);
       },
       // 小类商品列表的获取方法
       getGoodList(){
+        console.log('getGoodList事件')
         axios({
           url:url.getGoodsListByCategorySubID,
           method:'post',
@@ -155,6 +167,7 @@
             categorySubId:this.categorySubId
           }
         }).then((res)=>{
+          console.log('goodList',res.data.message)
           if(res.data.code == 200 && res.data.message.length){
             this.page++
             this.goodList = this.goodList.concat(res.data.message)
@@ -168,14 +181,18 @@
         })
       },
       //点击小tab获取相应内容
-      onClickCategorySub(index){
+      onClickCategorySub(index,title){
         this.categorySubId = this.categorySub[index].ID
         //做一些重置
         this.goodList = []
         this.page = 1
         this.finished  = false
         this.onLoad()
-        console.log('tab点击了')
+        // console.log('tab点击了')
+      },
+      //跳转到商品详细页
+      goGoodsInfo(goodsId){
+        this.$router.push({name:'Goods',params:{goodsId}})
       }
     },
 

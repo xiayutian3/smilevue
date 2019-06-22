@@ -268,7 +268,8 @@
 	}
 
 	.hot-goods {
-		height: 130rem;
+		/* height: 130rem; */
+    padding-bottom: 50px;
 		overflow: hidden;
 		background-color: #fff;
 	}

@@ -66,7 +66,7 @@ export default {
         }else{
           Toast('服务器错误，数据获取失败')
         }
-        console.log('goodsInfo',this.goodsInfo)
+        // console.log('goodsInfo',this.goodsInfo)
       }).catch(err=>
       console.log(err)
       )

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="navbar-div">
-      <van-nav-bar title="购物车" />
+      <van-nav-bar title="购物车" left-text="返回" left-arrow @click-left="onClickLeft"/>
     </div>
     <!--清空购物车-->
     <div class="card-title">
@@ -17,8 +17,22 @@
               <van-stepper v-model="item.count"/>
             </div>
         </div>
-        <div class="pang-goods-price">￥{{item.price | moneyFilter}}</div>
+        <div class="pang-goods-price">
+          <div>
+              ￥{{item.price | moneyFilter}}
+          </div>
+          <div>
+              x{{item.count}}
+          </div>
+          <div class="allPrice">
+              ￥{{item.price*item.count | moneyFilter }}
+          </div>
+        </div>
       </div>
+    </div>
+    <!--显示总金额-->
+    <div class="totalMoney">
+        商品总价：￥ {{totalMoney | moneyFilter}}
     </div>
   </div>
 </template>
@@ -46,14 +60,27 @@ export default {
       console.log(' this.cartInfo:'+JSON.stringify( this.cartInfo))
       this.isEmpty = this.cartInfo.length>0 ?true:false
     },
+    onClickLeft(){
+      this.$router.go(-1)
+    },
     clearCart(){
       localStorage.removeItem('cartInfo')
       this.cartInfo = []
     }
   },
-  computed:{},
+  computed:{
+    totalMoney(){
+      let allMoney = 0
+      this.cartInfo.forEach(item =>{
+        allMoney += item.price*item.count
+      } );
+      localStorage.cartInfo = JSON.stringify(this.cartInfo)
+      return allMoney
+    }
+  },
   components:{},
-  watch:{}
+  watch:{
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -95,5 +122,14 @@ export default {
 .pang-goods-price{
     flex:4;
     text-align: right;
+}
+.allPrice{
+  color: red;
+}
+.totalMoney{
+    text-align: right;
+    background-color: #fff;
+     border-bottom:1px solid #E4E7ED;
+     padding: 5px;
 }
 </style>

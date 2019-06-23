@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
-    <swiper :options="wrapSwiperOptions" class="wrapSwiper" ref="SwiperId">
-      <swiper-slide class="wrapSwiperItem">
-        <!-- <scroller> -->
+    <!-- <swiper :options="wrapSwiperOptions" class="wrapSwiper" ref="SwiperId">
+      <swiper-slide class="wrapSwiperItem"> -->
+        <scroller>
             <div class="inner">
                 <div class="search-bar">
                     <van-row>
@@ -84,13 +84,13 @@
                     </div>
                   </div>
             </div>
-        <!-- </scroller> -->
+        </scroller>
         
         
 
 
-      </swiper-slide>
-    </swiper>
+      <!-- </swiper-slide>
+    </swiper> -->
 
 
   </div>
@@ -139,8 +139,8 @@
           freeMode: true,
           mousewheel: true,
           // 以下两个可以用可以不用
-          // observeParents:true,
-          // observer:true,
+          observeParents:true,
+          observer:true,
         }
       }
     },
@@ -174,9 +174,8 @@
         this.floor2 = res.data.data.floor2              //楼层2数据
         this.floor3 = res.data.data.floor3              //楼层3数据
         this.floorName = res.data.data.floorName
-        this.hotGoods = res.data.data.hotGoods
-        // this.floor1_0 =this.floor1[0]
-        // this.floor1_1 =this.floor1[1]
+        this.hotGoods= res.data.data.hotGoods
+        // this.floor1_0 =this.floor1[0]v-if=""
         // this.floor1_2 =this.floor1[2]
         // console.log(this.hotGoods)
           console.log(this.hotGoods.length)
@@ -206,6 +205,7 @@
 
 <style scoped>
   .wrap{
+    position: relative;
     height: 100%;
   }
   .wrapSwiper {

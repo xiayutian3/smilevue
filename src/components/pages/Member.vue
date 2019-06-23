@@ -4,7 +4,7 @@
             <van-nav-bar  title="会员中心" />
         </div>
         <div class="top">
-           <img src="http://7xjyw1.com1.z0.glb.clouddn.com/touxiang001.jpg" class="top-img" />
+           <img v-lazy="avatar" class="top-img" />
         </div>
         <div class="login">
             <div><van-button type="warning" @click="$router.push({name:'Login'})">我要登录</van-button></div>
@@ -26,6 +26,11 @@
 
 <script>
     export default {
+      data(){
+        return {
+          avatar:require("@/assets/images/pic2.jpg")
+        }
+      }
         
     }
 </script>

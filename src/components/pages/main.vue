@@ -1,9 +1,12 @@
 <template>
   <div class="wrap">
     <div class="main-div">
-      <keep-alive>
-          <router-view/>
-      </keep-alive>
+      <transition name="page-move">
+        <keep-alive>
+            <router-view/>
+        </keep-alive>
+      </transition>
+      
     </div>
     <div class="bar">
       <van-tabbar
@@ -90,5 +93,14 @@ export default {
   width: 100%;
   height: 100%;
   padding-bottom: 50px;
+}
+.page-move-enter-active{
+  transition: all .3s ease;
+}
+.page-move-leave-active{
+  transition: all .3s ease-in;
+}
+.page-move-enter,.page-move-leave-to{
+  opacity: 0;
 }
 </style>

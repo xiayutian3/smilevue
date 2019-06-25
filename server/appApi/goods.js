@@ -87,7 +87,7 @@ router.get('/insertAllCategory_sub',async(ctx)=>{
 // })
 */
 
-/***获取商品详细信息的接口*/
+/***获取商品详细信息的接口   (优雅写法)*/ 
 router.post('/getDetailGoodsInfo',async(ctx)=>{
   try{
     let goodsId = ctx.request.body.goodsId
@@ -154,6 +154,31 @@ router.post('/getGoodsListByCategorySubID',async(ctx)=>{
     const Goods = mongoose.model('Goods')
     let result = await Goods.find({SUB_ID:categorySubId}).skip(start).limit(num).exec()
     ctx.body = {
+      code:200,
+      message:result
+    }
+  }catch(err){
+    ctx.body = {
+      code:500,
+      message:err
+    }
+  }
+})
+
+
+/*将首页原来由easy-mock提供的数据插入数据库中，由数据库读取 */
+router.get('/getIndex',async(ctx)=>{
+  try{
+    // 因为是自己手动插入的
+    // 提取到shcame中 统一管理
+    // const Schema = mongoose.Schema
+    // let indexSchema = new Schema({},{collection:'index'})
+
+
+    const index = mongoose.model('Index')
+    let result = await index.find({}).exec()
+    // console.log(1111,result)
+    ctx.body={
       code:200,
       message:result
     }

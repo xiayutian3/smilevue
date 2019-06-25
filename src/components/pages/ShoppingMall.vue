@@ -97,7 +97,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '@/request/request.js'
   // import 'swiper/dist/css/swiper.css'
   // import {
   // 	swiper,
@@ -166,21 +166,21 @@
     async created() {
       let res = await axios.get(url.getShoppingMallInfo)
       if (res.status == 200) {
-        this.category = res.data.data.category
-        this.adBanner = res.data.data.advertesPicture.PICTURE_ADDRESS
-        this.bannerPicArray = res.data.data.slides
-        this.recommendGoods = res.data.data.recommend
-        this.floor1 = res.data.data.floor1 //楼层1数据
-        this.floor2 = res.data.data.floor2              //楼层2数据
-        this.floor3 = res.data.data.floor3              //楼层3数据
-        this.floorName = res.data.data.floorName
-        this.hotGoods= res.data.data.hotGoods
-        // this.floor1_0 =this.floor1[0]v-if=""
+        this.category = res.data.message[0].data.category
+        this.adBanner = res.data.message[0].data.advertesPicture.PICTURE_ADDRESS
+        this.bannerPicArray = res.data.message[0].data.slides
+        this.recommendGoods = res.data.message[0].data.recommend
+        this.floor1 = res.data.message[0].data.floor1 //楼层1数据
+        this.floor2 = res.data.message[0].data.floor2              //楼层2数据
+        this.floor3 = res.data.message[0].data.floor3              //楼层3数据
+        this.floorName = res.data.message[0].data.floorName
+        this.hotGoods= res.data.message[0].data.hotGoods
+        // this.floor1_0 =this.floor1[0]
         // this.floor1_2 =this.floor1[2]
         // console.log(this.hotGoods)
-          console.log(this.hotGoods.length)
+          // console.log('xxxxx',res)
       } else {
-        // console.log(err)
+        console.log(err)
       }
 
     },

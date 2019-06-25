@@ -33,7 +33,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  // import axios from 'axios'
+  import axios from '@/request/request.js'
   import url from '@/serverAPI.config.js'
   import {Toast} from 'vant'
 export default {

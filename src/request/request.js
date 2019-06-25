@@ -23,7 +23,7 @@ service.interceptors.request.use(config => {
   //   config.headers['X-Token'] = localStorage.getItem("token") // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改，一般项目中多是从store中获取，这里只是写的基本例子。
   // }
 
- console.log('config',config)
+//  console.log('config',config)
 
   return config
 }, error => {
@@ -35,7 +35,7 @@ service.interceptors.request.use(config => {
 // respone拦截器
 service.interceptors.response.use(
   response => {
-    console.log('response',response)
+    // console.log('response',response)
     return response
   },
   //此处根据返回的状态code进行具体的判断，代码省略

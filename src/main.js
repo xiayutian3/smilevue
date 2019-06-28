@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import VueScroller from 'vue-scroller'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+//自定的Toast组件
+import DyToast from './components/toast'
+
+
 // require styles
 import 'swiper/dist/css/swiper.css'
 import {  Cell, CellGroup,Tabbar, TabbarItem ,Stepper, Button,Row,Col,Search, Swipe , SwipeItem,Lazyload,List ,Field,NavBar,Tab,Tabs,Toast,PullRefresh } from 'vant'
@@ -18,6 +22,9 @@ Vue.use(VueScroller)
 
 /*注册全局价格过滤器*/
 Vue.filter('moneyFilter',(money)=>money.toFixed(2))
+
+//使用自定义的toast组件
+Vue.prototype.$dyToast = DyToast
 
 Vue.config.productionTip = false
 

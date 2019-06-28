@@ -179,6 +179,15 @@
         // this.floor1_2 =this.floor1[2]
         // console.log(this.hotGoods)
           // console.log('xxxxx',res)
+
+
+          //自定义toast组件使用
+          this.$dyToast({content: '网络错误',duration: 3000})
+          // this.$dyToast.success({content: '网络错误',duration: 3000})
+          // this.$dyToast.error({content: '网络错误',duration: 3000})
+
+
+          
       } else {
         console.log(err)
       }

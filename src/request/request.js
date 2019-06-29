@@ -28,7 +28,8 @@ service.interceptors.request.use(config => {
 
 //  console.log('config',config)
 
-//全局loading的添加
+//全局loading的添加(text可传可不传)
+
 // Vue.prototype.$dyLoading.open({text:'显示loading'})
 Vue.prototype.$dyLoading.open()
 
@@ -38,7 +39,6 @@ Vue.prototype.$dyLoading.open()
 }, error => {
   // Do something with request error
 
-  // Vue.prototype.$dyLoading({content:'我是全局loading',show:false})
 
   console.log(error) // for debug
   Promise.reject(error)
@@ -55,8 +55,6 @@ service.interceptors.response.use(
   //此处根据返回的状态code进行具体的判断，代码省略
   error => {
     console.log('err' + error)// for debug
-
-    // Vue.prototype.$dyLoading({content:'我是全局loading',show:false})
 
     return Promise.reject(error)
   })

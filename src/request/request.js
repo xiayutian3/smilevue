@@ -1,4 +1,7 @@
+import Vue from 'vue'
 import axios from 'axios'
+
+
 
 
 // // 环境的切换
@@ -25,9 +28,18 @@ service.interceptors.request.use(config => {
 
 //  console.log('config',config)
 
+//全局loading的添加
+// Vue.prototype.$dyLoading.open({text:'显示loading'})
+Vue.prototype.$dyLoading.open()
+
+
+
   return config
 }, error => {
   // Do something with request error
+
+  // Vue.prototype.$dyLoading({content:'我是全局loading',show:false})
+
   console.log(error) // for debug
   Promise.reject(error)
 })
@@ -36,11 +48,15 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     // console.log('response',response)
+    Vue.prototype.$dyLoading.close({text:'显示loading'})
+
     return response
   },
   //此处根据返回的状态code进行具体的判断，代码省略
   error => {
     console.log('err' + error)// for debug
+
+    // Vue.prototype.$dyLoading({content:'我是全局loading',show:false})
 
     return Promise.reject(error)
   })

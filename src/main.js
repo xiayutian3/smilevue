@@ -8,6 +8,10 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 //自定的Toast组件
 import DyToast from './components/toast'
 
+//自定的loading组件
+import DyLoading from './components/loading'
+
+
 
 // require styles
 import 'swiper/dist/css/swiper.css'
@@ -25,6 +29,9 @@ Vue.filter('moneyFilter',(money)=>money.toFixed(2))
 
 //使用自定义的toast组件
 Vue.prototype.$dyToast = DyToast
+
+//使用自定义的loading组件
+Vue.prototype.$dyLoading = DyLoading
 
 Vue.config.productionTip = false
 

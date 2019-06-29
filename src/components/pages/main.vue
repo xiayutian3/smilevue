@@ -2,9 +2,9 @@
   <div class="wrap">
     <div class="main-div">
       <transition name="page-move">
-        <keep-alive>
+        <!-- <keep-alive> -->
             <router-view/>
-        </keep-alive>
+        <!-- </keep-alive> -->
       </transition>
       
     </div>

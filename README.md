@@ -1,6 +1,9 @@
 # smile
 
 > A Vue.js project:  vue + mock +koa2 +node +moogodb
+1、mongod
+2、启动后台服务server文件夹下 node index.js
+3、启动项目 npm run dev
 
 ## Build Setup
 

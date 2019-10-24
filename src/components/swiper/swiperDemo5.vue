@@ -87,17 +87,14 @@
       // display: flex;
       width: 100%;
       // height: 100%;
-      .swiper-slide{
+      .test-slide{
         width: 100% !important;
         height: auto;
       }
       .swiper-pagination-bullets{
         bottom: 0;
       }
-      .swiper-wrapper{
-        width: 100%;
-      }
     }
-
   }
 </style>
+

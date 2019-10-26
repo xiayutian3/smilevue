@@ -10,6 +10,7 @@ import CategoryList from '@/components/pages/CategoryList'
 import Cart from '@/components/pages/Cart'
 import Main from '@/components/pages/Main'
 import Member from '@/components/pages/Member'
+import SwiperDemo from '@/components/swiper/swiperDemo4'
 
 Vue.use(Router)
 
@@ -20,6 +21,11 @@ export default new Router({
       redirect:'/main/shoppingmall'
     },
     {
+      path:'/swiper-demo',
+      name:'SwiperDemo',
+      component: SwiperDemo
+    },
+    {
       path: '/main',
       name: 'Main',
       component: Main,
@@ -28,39 +34,39 @@ export default new Router({
           path: 'shoppingmall',
           name: 'ShoppingMall',
           component: ShoppingMall
-        }, 
+        },
         {
           path: 'categoryList',
           name: 'CategoryList',
           component: CategoryList
-        }, 
+        },
         {
           path: 'cart',
           name: 'Cart',
           component: Cart
-        }, 
+        },
         {
           path: 'member',
           name: 'Member',
           component: Member
-        }, 
+        },
       ]
     },
     {
       path: '/register',
       name: 'Register',
       component: Register
-    }, 
+    },
     {
       path: '/login',
       name: 'Login',
       component: Login
-    }, 
+    },
     {
       path: '/goods',
       name: 'Goods',
       component: Goods
-    }, 
-  
+    },
+
   ]
 })
